@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import LoginPage from "../views/LoginPage";
 import BaseLayout from "../views/BaseLayout";
 import RegisterPage from "../views/RegisterPage";
+import HomePage from "../views/HomePage";
 
 const url = "http://localhost:3000";
 const router = createBrowserRouter([
@@ -15,7 +16,12 @@ const router = createBrowserRouter([
   },
   {
     element: <BaseLayout />,
-    children: [],
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+    ],
   },
 ]);
 
