@@ -1,7 +1,27 @@
-import { useNavigate } from "react-router-dom";
 
+import Swal from "sweetalert2";
+import axios from 'axios';
+import { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 export default function LoginPage() {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  async function handleLogin(event) {
+    event.preventDefault();
+    try {
+      let { data } = await axios.post(`http://localhost:3000/login`, { userName, password });
+      localStorage.setItem("token", data.access_token);
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: "Login failed",
+        text: error.response.data.message
+      })
+    }
+  }
 
   return (
     <>
@@ -19,12 +39,13 @@ export default function LoginPage() {
             <form className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text">User Name</span>
                 </label>
                 <input
-                  type="email"
-                  placeholder="email"
+                  type="text"
+                  placeholder="username"
                   className="input input-bordered"
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
               <div className="form-control">
@@ -35,6 +56,7 @@ export default function LoginPage() {
                   type="password"
                   placeholder="password"
                   className="input input-bordered"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <label className="label m-auto">
                   <p>
@@ -49,7 +71,7 @@ export default function LoginPage() {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-primary" onClick={handleLogin}>Login</button>
               </div>
             </form>
           </div>

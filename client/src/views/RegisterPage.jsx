@@ -1,7 +1,30 @@
-import { useNavigate } from "react-router-dom";
 
+import Swal from "sweetalert2";
+import axios from 'axios';
+import { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 export default function RegisterPage() {
+  const [name, setName] = useState('')
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  async function handleRegister(event) {
+    event.preventDefault();
+    try {
+      await axios.post(`http://localhost:3000/register`, { name, userName, password });
+      navigate('/login')
+      Swal.fire({
+        icon: "success",
+        title: "Registration successful"
+      })
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: error.response.data.message
+      })
+    }
+  }
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -18,22 +41,24 @@ export default function RegisterPage() {
             <form className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Username</span>
+                  <span className="label-text">Name</span>
                 </label>
                 <input
                   type="text"
                   placeholder="username"
                   className="input input-bordered"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text">User Name</span>
                 </label>
                 <input
-                  type="email"
-                  placeholder="email"
+                  type="text"
+                  placeholder="userName"
                   className="input input-bordered"
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
               <div className="form-control">
@@ -44,6 +69,7 @@ export default function RegisterPage() {
                   type="password"
                   placeholder="password"
                   className="input input-bordered"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <label className="label m-auto">
                   <p>
@@ -58,7 +84,7 @@ export default function RegisterPage() {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Register</button>
+                <button className="btn btn-primary" onClick={handleRegister}>Register</button>
               </div>
             </form>
           </div>
