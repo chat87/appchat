@@ -5,6 +5,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+
 export default function Sidebar({ socket }) {
   const [usersList, addUsers] = useState([]);
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ export default function Sidebar({ socket }) {
     // kenapa butuh connect manual? supaya bisa set auth dlu sblm connect
     socket.connect()
 
-
     socket.on("users", (users) => {
       users.forEach((user) => {
         user.self = user.userID === socket.id;
@@ -38,14 +38,28 @@ export default function Sidebar({ socket }) {
       console.log(users);
     });
 
-    socket.on("user connected", (user) => {
-      // addUsers([...usersList, user]);
-      addUsers(current => {
-        return [...current, user]
-      })
-    });
+    const handleUserConnected = (user) => {
+      addUsers((usersList) => {
+        const isExists = usersList.some((u) => u.username === user.username);
+        if (!isExists) {
+          return [...usersList, user];
+        } else {
+          return usersList;
+        }
+      });
+    };
+    const handleUserDisconnected = (disconnectedUser) => {
+      addUsers((usersList) => usersList.filter(user => user.userID !== disconnectedUser.userID));
+    };
 
-  }, [usersList])
+    socket.on("user connected", handleUserConnected);
+    socket.on("user disconnected", handleUserDisconnected);
+
+    return () => {
+      socket.off("user connected", handleUserConnected);
+      socket.off("user disconnected", handleUserDisconnected);
+    };
+  }, []);
   return (
     <>
       <div className="border-r border-slate-500 p-4 flex flex-col">
@@ -60,18 +74,9 @@ export default function Sidebar({ socket }) {
           </button>
         </form>
         <div className="divider px-3"></div>
-        {/* {conversations.map((conversation, idx) => (
-				<Conversation
-					key={conversation._id}
-					conversation={conversation}
-					emoji={getRandomEmoji()}
-					lastIdx={idx === conversations.length - 1}
-				/>
-			))} */}
         {usersList.map(e => {
           return <Conversations key={e.userID} card={e} />
         })}
-        {/* <Conversations /> */}
         <div className="mt-auto">
           <BiLogOut
             className="w-6 h-6 text-white cursor-pointer"

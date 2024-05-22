@@ -1,9 +1,16 @@
-// import Conversation from "./Conversation";
+import { useContext } from "react";
+import { MessageContext } from "../../contexts/MessageContext";
 
+// MessageContainer
 export default function Conversations({ card }) {
+  console.log(card.self)
+
+  const { setName } = useContext(MessageContext)
+
+
   return (
-    <div className="py-2 flex flex-col overflow-auto">
-      <div className="flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer">
+    <div className="py-2 flex flex-col overflow-auto" >
+      <div className="flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer" onClick={() => !card.self ? setName(card.username) : null}>
         <div className="avatar online">
           <div className="w-12 rounded-full">
             <img
@@ -16,7 +23,7 @@ export default function Conversations({ card }) {
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-bold text-gray-200">{card.username}</p>
-            <span className="text-xl">👍</span>
+            <span className="text-xl">{card.self ? (<><p>saya</p></>) : (<><p>oranglain</p></>)}</span>
           </div>
         </div>
       </div>

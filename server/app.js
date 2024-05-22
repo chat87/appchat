@@ -116,21 +116,16 @@ io.use((socket, next) => {
 
 io.on('connection', (socket) => {
     const users = [];
-    for (let [id, socket] of io.of("/").sockets) {
-        if (!socket.username) { continue }
+    for (let [id, connectedSocket] of io.of("/").sockets) {
+        if (!connectedSocket.username) { continue }
         users.push({
             userID: id,
-            username: socket.username,
+            username: connectedSocket.username,
             key: id,
+            self: true
         });
     }
     socket.emit("users", users);
-    console.log("user list");
-    console.log(users);
-
-    socket.onAny((event, ...args) => {
-        console.log(event, args);
-    });
 
     socket.broadcast.emit("user connected", {
         userID: socket.id,
@@ -138,7 +133,19 @@ io.on('connection', (socket) => {
         key: socket.id,
         self: false,
     });
-
+    socket.on("disconnect", () => {
+        socket.broadcast.emit("user disconnected", {
+            userID: socket.id,
+            username: socket.username,
+            key: socket.id,
+        });
+    });
+    socket.on("private message", ({ content, to }) => {
+        socket.to(to).emit("private message", {
+            content,
+            from: socket.username,
+        });
+    });
 
 });
 
