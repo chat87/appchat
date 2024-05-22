@@ -3,14 +3,16 @@ import { MessageContext } from "../../contexts/MessageContext";
 
 // MessageContainer
 export default function Conversations({ card }) {
-  console.log(card.self)
+  console.log(card.self);
 
-  const { setName } = useContext(MessageContext)
-
+  const { setName } = useContext(MessageContext);
 
   return (
-    <div className="py-2 flex flex-col overflow-auto" >
-      <div className="flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer" onClick={() => !card.self ? setName(card.username) : null}>
+    <div className="py-2 flex flex-col overflow-auto">
+      <div
+        className="flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer"
+        onClick={() => (!card.self ? setName(card.username) : null)}
+      >
         <div className="avatar online">
           <div className="w-12 rounded-full">
             <img
@@ -22,8 +24,18 @@ export default function Conversations({ card }) {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200">{card.username}</p>
-            <span className="text-xl">{card.self ? (<><p>saya</p></>) : (<><p>oranglain</p></>)}</span>
+            <p className="font-bold text-lg text-gray-200">{card.username}</p>
+            <span className="text-base">
+              {card.self ? (
+                <>
+                  <p>saya</p>
+                </>
+              ) : (
+                <>
+                  <p></p>
+                </>
+              )}
+            </span>
           </div>
         </div>
       </div>

@@ -1,27 +1,26 @@
-
 import { useContext, useEffect, useState } from "react";
 // import Message from "./Message";
 import { BsSend } from "react-icons/bs";
+import { TiMessages } from "react-icons/ti";
 import { MessageContext } from "../../contexts/MessageContext";
 
 export default function MessageContainer({ socket }) {
-  const { name } = useContext(MessageContext)
-  const [messageSent, setMessageSent] = useState("")
-  const [messages, setMessages] = useState([])
+  const { name } = useContext(MessageContext);
+  const [messageSent, setMessageSent] = useState("");
+  const [messages, setMessages] = useState([]);
 
   if (!name) {
     return (
       <>
-        <div className="md:min-w-[450px] flex flex-col">
-
-          <div className="px-4 py-2 mb-2">
-
-            <h1>masih kosong</h1>
+        <div className="flex items-center justify-center w-full h-full">
+          <div className="px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2">
+            <p>Welcome 👋</p>
+            <p>Select a chat to start messaging</p>
+            <TiMessages className="text-3xl md:text-6xl text-center" />
           </div>
-
         </div>
       </>
-    )
+    );
   }
 
   return (
@@ -45,17 +44,14 @@ export default function MessageContainer({ socket }) {
           <div className={`chat-bubble text-white bg-blue-500  pb-2`}>
             This isMessage
           </div>
-          <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
-            20:15
-          </div>
         </div>
       </div>
       {/* input pesan */}
-      <form className="px-4 my-3" >
+      <form className="px-4 my-3">
         <div className="w-full relative">
           <input
             type="text"
-            className="border text-sm rounded-lg block w-full p-2.5  bg-gray-200 border-gray-600 text-white"
+            className="border text-sm rounded-lg block w-full p-2.5  bg-gray-200 border-gray-600"
             placeholder="Send a message"
           />
           <button

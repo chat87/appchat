@@ -1,28 +1,31 @@
-
 import Swal from "sweetalert2";
-import axios from 'axios';
-import { useState } from 'react'
+import axios from "axios";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 export default function RegisterPage() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   async function handleRegister(event) {
     event.preventDefault();
     try {
-      await axios.post(`http://localhost:3000/register`, { name, userName, password });
-      navigate('/login')
+      await axios.post(`http://localhost:3000/register`, {
+        name,
+        userName,
+        password,
+      });
+      navigate("/login");
       Swal.fire({
         icon: "success",
-        title: "Registration successful"
-      })
+        title: "Registration successful",
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       Swal.fire({
         icon: "error",
-        title: error.response.data.message
-      })
+        title: error.response.data.message,
+      });
     }
   }
   return (
@@ -32,9 +35,8 @@ export default function RegisterPage() {
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Register now!</h1>
             <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              ChatSync, where people come to get connected. Engage in lively
+              chat with friends.
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
@@ -45,18 +47,18 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="text"
-                  placeholder="username"
+                  placeholder="name"
                   className="input input-bordered"
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">User Name</span>
+                  <span className="label-text">Username</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="userName"
+                  placeholder="username"
                   className="input input-bordered"
                   onChange={(e) => setUserName(e.target.value)}
                 />
@@ -84,7 +86,9 @@ export default function RegisterPage() {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary" onClick={handleRegister}>Register</button>
+                <button className="btn btn-primary" onClick={handleRegister}>
+                  Register
+                </button>
               </div>
             </form>
           </div>
