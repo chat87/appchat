@@ -1,7 +1,6 @@
-
 import Swal from "sweetalert2";
-import axios from 'axios';
-import { useState } from 'react'
+import axios from "axios";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 export default function LoginPage() {
   const [userName, setUserName] = useState("");
@@ -10,16 +9,19 @@ export default function LoginPage() {
   async function handleLogin(event) {
     event.preventDefault();
     try {
-      let { data } = await axios.post(`http://localhost:3000/login`, { userName, password });
+      let { data } = await axios.post(`http://localhost:3000/login`, {
+        userName,
+        password,
+      });
       localStorage.setItem("token", data.access_token);
-      navigate('/')
+      navigate("/");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "Login failed",
-        text: error.response.data.message
-      })
+        text: error.response.data.message,
+      });
     }
   }
 
@@ -30,16 +32,15 @@ export default function LoginPage() {
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Login now!</h1>
             <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              ChatSync, where people come to get connected. Engage in lively
+              chat with friends.
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
             <form className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">User Name</span>
+                  <span className="label-text">Username</span>
                 </label>
                 <input
                   type="text"
@@ -71,7 +72,9 @@ export default function LoginPage() {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+                <button className="btn btn-primary" onClick={handleLogin}>
+                  Login
+                </button>
               </div>
             </form>
           </div>
