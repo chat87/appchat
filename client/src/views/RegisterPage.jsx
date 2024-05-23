@@ -1,8 +1,8 @@
 import Swal from "sweetalert2";
 import axios from "axios";
-import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {IoArrowBackCircle} from "react-icons/io5";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBackCircle } from "react-icons/io5";
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
@@ -34,10 +34,14 @@ export default function RegisterPage() {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Register now!</h1>
-            <p className="py-6">
-              ChatSync, where people come to get connected. Engage in lively
-              chat with friends.
+            <h1 className="max-w-2xl mb-4 text-3xl font-extrabold leading-none tracking-tight md:text-4xl xl:text-5xl dark:text-black">
+              Register now!
+            </h1>
+            <p className="py-6 text-xl">
+              Lively chat with friends. Where people come to get connected, send
+              and receive chat. Enjoy{" "}
+              <span className="font-bold">ChatSync</span> anytime, anywhere, in
+              real-time, for free.
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
