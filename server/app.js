@@ -13,7 +13,7 @@ const server = createServer(app);
 app.use(cors())
 const io = new Server(server, {
     cors: {
-        origin: "https://chatsync.simson.id/"
+        origin: "https://chatsync.simson.id"
     }
 });
 app.use(express.urlencoded({ extended: true }))
