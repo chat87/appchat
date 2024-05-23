@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { io } from "socket.io-client";
 import LandingPage from "../views/LandingPage";
 
-const socket = io("http://localhost:3000", {
+const socket = io("https://chat-api.simson.id", {
   autoConnect: false,
 });
 const router = createBrowserRouter([
