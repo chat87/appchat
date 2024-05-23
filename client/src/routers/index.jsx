@@ -1,14 +1,19 @@
-import { createBrowserRouter, redirect } from "react-router-dom";
+import {createBrowserRouter, redirect} from "react-router-dom";
 import LoginPage from "../views/LoginPage";
 import RegisterPage from "../views/RegisterPage";
 import HomePage from "../views/HomePage";
 import Swal from "sweetalert2";
-import { io } from 'socket.io-client'
+import {io} from "socket.io-client";
+import LandingPage from "../views/LandingPage";
 
 const socket = io("http://localhost:3000", {
-  autoConnect: false
+  autoConnect: false,
 });
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
   {
     path: "/login",
     element: <LoginPage />,
@@ -16,13 +21,13 @@ const router = createBrowserRouter([
       if (localStorage.token) {
         Swal.fire({
           icon: "error",
-          title: `You already logged in`
-        })
-        return redirect('/')
+          title: `You already logged in`,
+        });
+        return redirect("/");
       }
 
-      return null
-    }
+      return null;
+    },
   },
   {
     path: "/register",
@@ -31,26 +36,26 @@ const router = createBrowserRouter([
       if (localStorage.token) {
         Swal.fire({
           icon: "error",
-          title: `You already logged in`
-        })
-        return redirect('/')
+          title: `You already logged in`,
+        });
+        return redirect("/");
       }
 
-      return null
-    }
+      return null;
+    },
   },
   {
-    path: "/",
+    path: "/homePage",
     element: <HomePage socket={socket} />,
     loader: () => {
       if (!localStorage.token) {
         Swal.fire({
-          icon: 'error',
-          title: 'first login'
-        })
-        return redirect('/login')
+          icon: "error",
+          title: "first login",
+        });
+        return redirect("/login");
       }
-      return null
+      return null;
     },
   },
 ]);

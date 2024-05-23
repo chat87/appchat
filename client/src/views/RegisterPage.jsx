@@ -1,7 +1,8 @@
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {IoArrowBackCircle} from "react-icons/io5";
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
@@ -41,6 +42,10 @@ export default function RegisterPage() {
           </div>
           <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
             <form className="card-body">
+              <IoArrowBackCircle
+                className="w-6 h-6 outline-none cursor-pointer text-white bg-teal-700 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300"
+                onClick={() => navigate("/")}
+              />
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
@@ -52,6 +57,7 @@ export default function RegisterPage() {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Username</span>
@@ -86,7 +92,10 @@ export default function RegisterPage() {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary" onClick={handleRegister}>
+                <button
+                  className="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800"
+                  onClick={handleRegister}
+                >
                   Register
                 </button>
               </div>
