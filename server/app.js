@@ -166,11 +166,6 @@ io.on('connection', (socket) => {
 
 });
 
-
-
-// app.listen(PORT, () => {
-//     console.log(`http://localhost:${PORT}`)
-// })
 server.listen(PORT, () => {
     console.log(`App on${PORT}`);
 })
