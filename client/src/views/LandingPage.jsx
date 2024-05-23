@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
             <a href="#" className="flex items-center">
               <img
-                src="../src/assets/chatsync.png"
+                src="../src/assets/logo-chatsync.png"
                 width="150"
                 height="150"
                 alt="Landwind Logo"

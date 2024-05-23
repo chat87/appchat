@@ -1,8 +1,8 @@
 import Swal from "sweetalert2";
 import axios from "axios";
-import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {IoArrowBackCircle} from "react-icons/io5";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBackCircle } from "react-icons/io5";
 export default function LoginPage() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -10,12 +10,16 @@ export default function LoginPage() {
   async function handleLogin(event) {
     event.preventDefault();
     try {
-      let {data} = await axios.post(`http://localhost:3000/login`, {
+      let { data } = await axios.post(`http://localhost:3000/login`, {
         userName,
         password,
       });
       localStorage.setItem("token", data.access_token);
-      navigate("/homePage");
+      Swal.fire({
+        title: "Successfully logged in",
+        icon: "success",
+      });
+      navigate("/homepage");
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -31,18 +35,20 @@ export default function LoginPage() {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-black">
+            <h1 className="max-w-2xl mb-4 text-3xl font-extrabold leading-none tracking-tight md:text-4xl xl:text-5xl dark:text-black">
               Login now!
             </h1>
-            <p className="py-6">
-              ChatSync, where people come to get connected. Engage in lively
-              chat with friends.
+            <p className="py-6 text-xl">
+              Lively chat with friends. Where people come to get connected, send
+              and receive chat. Enjoy{" "}
+              <span className="font-bold">ChatSync</span> anytime, anywhere, in
+              real-time, for free.
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-md shadow-2xl bg-base-100">
             <form className="card-body">
               <IoArrowBackCircle
-                className="w-6 h-6 outline-none cursor-pointer w-6 h-6 outline-none cursor-pointer text-white bg-teal-700 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300"
+                className="w-6 h-6 outline-none cursor-pointer text-white bg-teal-700 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300"
                 onClick={() => navigate("/")}
               />
               <div className="form-control">

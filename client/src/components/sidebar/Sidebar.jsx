@@ -1,16 +1,15 @@
 import Conversations from "./Conversations";
-import {IoSearchSharp} from "react-icons/io5";
-import {BiLogOut} from "react-icons/bi";
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { BiLogOut } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Sidebar({socket}) {
+export default function Sidebar({ socket }) {
   const [usersList, setUsersList] = useState([]);
   const navigate = useNavigate();
   function handleLogout() {
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
     socket.disconnect();
   }
 
@@ -29,7 +28,7 @@ export default function Sidebar({socket}) {
           user.self = user.userID === socket.id;
         });
 
-        const {data} = await axios.get("http://localhost:3000/list");
+        const { data } = await axios.get("http://localhost:3000/list");
         let finalUserList = [];
         for (let i = 0; i < data.length; i++) {
           let dbUser = data[i];
@@ -119,23 +118,18 @@ export default function Sidebar({socket}) {
   return (
     <>
       <div className="border-r border-slate-500 p-4 flex flex-col">
-        <form className="flex items-center gap-2">
-          <input
-            type="text"
-            placeholder="Search…"
-            className="input input-bordered rounded-full"
+        <div>
+          <img
+            className="flex justify-center items-center m-auto h-20"
+            src="../../src/assets/logo-chatsync.png"
+            alt="logo"
           />
-          <button
-            type="submit"
-            className="btn btn-circle bg-sky-500 text-white"
-          >
-            <IoSearchSharp className="w-6 h-6 outline-none" />
-          </button>
-        </form>
-        <div className="divider px-3"></div>
-        {usersList.map((e) => {
-          return <Conversations key={e.username} card={e} />;
-        })}
+        </div>
+        <div className="w-96 overflow-auto">
+          {usersList.map((e) => {
+            return <Conversations key={e.username} card={e} />;
+          })}
+        </div>
         <div className="mt-auto">
           <BiLogOut
             className="w-6 h-6 text-white cursor-pointer"
