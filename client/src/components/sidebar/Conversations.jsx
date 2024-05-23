@@ -13,9 +13,8 @@ export default function Conversations({ card }) {
       >
         <div className="avatar">
           <div
-            className={`w-12 rounded-full ring  ${
-              card.online ? "ring-warning" : "ring-error"
-            }  ring-offset-base-100 ring-offset-2`}
+            className={`w-12 rounded-full ring  ${card.online ? "ring-warning" : "ring-error"
+              }  ring-offset-base-100 ring-offset-2`}
           >
             <img
               src={`https://avatar.iran.liara.run/username?username=${card.username}`}
@@ -30,11 +29,11 @@ export default function Conversations({ card }) {
             <span className="text-base">
               {card.self ? (
                 <>
-                  <p>You</p>
+                  <p>My contact</p>
                 </>
               ) : (
                 <>
-                  <p></p>
+                  <p>{card.online ? '🟢online' : '🔴offline'}</p>
                 </>
               )}
             </span>

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { BsSend } from "react-icons/bs";
 import { TiMessages } from "react-icons/ti";
 import { MessageContext } from "../../contexts/MessageContext";
+import Swal from "sweetalert2";
 
 export default function MessageContainer({ socket }) {
   const { name } = useContext(MessageContext);
@@ -27,6 +28,18 @@ export default function MessageContainer({ socket }) {
 
     setMessageSent("");
   };
+  const showNotification = (message, from) => {
+    Swal.fire({
+      title: `From : ${from}`,
+      text: `Message: ${message}`,
+      icon: 'info',
+      timer: 3000,
+      timerProgressBar: true,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false
+    });
+  };
 
   useEffect(() => {
     socket.on("private message", ({ content, to, from, fromID }) => {
@@ -35,6 +48,7 @@ export default function MessageContainer({ socket }) {
           ...prevMessages,
           { content: content, from: from, fromID: fromID, to: to },
         ]);
+        showNotification(content, from)
       }
     });
 
@@ -67,7 +81,7 @@ export default function MessageContainer({ socket }) {
         {messages.map((message, index) => (
           <div key={index}>
             {message.fromID == name.card.userID ||
-            (message.fromID == socket.id && message.to == name.card.userID) ? (
+              (message.fromID == socket.id && message.to == name.card.userID) ? (
               <>
                 <div
                   className={
@@ -77,7 +91,7 @@ export default function MessageContainer({ socket }) {
                   }
                 >
                   <div className="text-white">
-                    {message.fromID == socket.id ? "You" : message.from}
+                    {message.fromID == socket.id ? "You" : null}
                   </div>
                   <div className="chat-image avatar">
                     <div className="w-10 rounded-full">
@@ -92,9 +106,8 @@ export default function MessageContainer({ socket }) {
                     </div>
                   </div>
                   <div
-                    className={`chat-bubble text-white ${
-                      message.fromID == socket.id ? "chat-bubble-accent" : ""
-                    }   pb-2`}
+                    className={`chat-bubble text-white ${message.fromID == socket.id ? "chat-bubble-accent" : ""
+                      }   pb-2`}
                   >
                     {message.content}
                   </div>
