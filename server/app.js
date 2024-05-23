@@ -115,6 +115,12 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
+
+    // const fetchUsers = await User.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'password'] } })
+
+    // console.log(fetchUsers)
+
+
     const users = [];
     for (let [id, connectedSocket] of io.of("/").sockets) {
         if (!connectedSocket.username) { continue }
@@ -143,9 +149,12 @@ io.on('connection', (socket) => {
     socket.on("private message", ({ content, to }) => {
         socket.to(to).emit("private message", {
             content,
+            to: to,
             from: socket.username,
+            fromID: socket.id
         });
     });
+    socket.join(socket.userID)
 
 });
 
@@ -155,5 +164,5 @@ io.on('connection', (socket) => {
 //     console.log(`http://localhost:${PORT}`)
 // })
 server.listen(PORT, () => {
-    console.log(`Aku cinta kamu ${PORT}`);
+    console.log(`App on${PORT}`);
 })
