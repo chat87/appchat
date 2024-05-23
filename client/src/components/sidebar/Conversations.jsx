@@ -3,7 +3,6 @@ import { MessageContext } from "../../contexts/MessageContext";
 
 // MessageContainer
 export default function Conversations({ card }) {
-  console.log(card.self);
 
   const { setName } = useContext(MessageContext);
 
@@ -11,7 +10,7 @@ export default function Conversations({ card }) {
     <div className="py-2 flex flex-col overflow-auto">
       <div
         className="flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer"
-        onClick={() => (!card.self ? setName(card.username) : null)}
+        onClick={() => (!card.self ? setName({ card }) : null)}
       >
         <div className="avatar online">
           <div className="w-12 rounded-full">

@@ -16,12 +16,10 @@ export default function Sidebar({ socket }) {
   }
 
   useEffect(() => {
-    // ngeset auth buat socketnya
     socket.auth = {
       token: localStorage.token
     }
 
-    // kenapa butuh connect manual? supaya bisa set auth dlu sblm connect
     socket.connect()
 
     socket.on("users", (users) => {
@@ -35,7 +33,6 @@ export default function Sidebar({ socket }) {
         return a.username > b.username ? 1 : 0;
       });
       addUsers(users);
-      console.log(users);
     });
 
     const handleUserConnected = (user) => {
