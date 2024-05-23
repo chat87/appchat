@@ -28,7 +28,7 @@ export default function Sidebar({ socket }) {
           user.self = user.userID === socket.id;
         });
 
-        const { data } = await axios.get("http://localhost:3000/list");
+        const { data } = await axios.get("https://chat-api.simson.id/list");
         let finalUserList = [];
         for (let i = 0; i < data.length; i++) {
           let dbUser = data[i];
