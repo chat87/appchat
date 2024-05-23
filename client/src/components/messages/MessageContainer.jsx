@@ -26,7 +26,6 @@ export default function MessageContainer({ socket }) {
 
     socket.on("private message", ({ content, to, from, fromID }) => {
       if (socket.id == to) {
-        console.log(content)
         setMessages((prevMessages) => [...prevMessages, { content: content, from: from, fromID: fromID, to: to }]);
       }
 
@@ -83,13 +82,13 @@ export default function MessageContainer({ socket }) {
           </div >
         ))}
       </div>
-      {/* input pesan */}
       <form className="px-4 my-3" onSubmit={sendMessage}>
         <div className="w-full relative">
           <input
             type="text"
             className="border text-sm rounded-lg block w-full p-2.5  bg-gray-200 border-gray-600"
-            placeholder="Send a message"
+            placeholder={name.card.online ? "Send a message" : `${name.card.username} is offline`}
+            disabled={name.card.online ? false : true}
             value={messageSent}
             onChange={(e) => setMessageSent(e.target.value)}
           />

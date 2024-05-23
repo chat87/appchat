@@ -34,6 +34,16 @@ app.post('/register', async (req, res, next) => {
         next(err)
     }
 })
+app.get('/list', async (req, res, next) => {
+    try {
+        const fetchUsers = await User.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'password'] } })
+
+        res.status(201).json(fetchUsers)
+    } catch (err) {
+        console.log(err)
+        next(err)
+    }
+})
 app.post('/login', async (req, res, next) => {
     try {
         const { userName, password } = req.body
@@ -115,12 +125,6 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-
-    // const fetchUsers = await User.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'password'] } })
-
-    // console.log(fetchUsers)
-
-
     const users = [];
     for (let [id, connectedSocket] of io.of("/").sockets) {
         if (!connectedSocket.username) { continue }
