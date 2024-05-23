@@ -23,7 +23,7 @@ export default function Conversations({ card }) {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-lg text-gray-200">{card.username}</p>
+            <p className="font-bold text-lg text-gray-200">{card.username} - {card.online ? 'online' : 'offline'}</p>
             <span className="text-base">
               {card.self ? (
                 <>
