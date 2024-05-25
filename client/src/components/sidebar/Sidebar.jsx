@@ -28,7 +28,7 @@ export default function Sidebar({ socket }) {
           user.self = user.userID === socket.id;
         });
 
-        const { data } = await axios.get("https://chat-api.simson.id/list");
+        const { data } = await axios.get("http://localhost:3000/list");
         let finalUserList = [];
         for (let i = 0; i < data.length; i++) {
           let dbUser = data[i];
@@ -92,6 +92,18 @@ export default function Sidebar({ socket }) {
           return e;
         })
       );
+
+      setUsersList((usersList) => {
+        const isExists = usersList.some((u) => u.username === user.username);
+        if (!isExists) {
+          user.online = true;
+          user.self = false;
+          return [...usersList, user];
+        } else {
+          return usersList;
+        }
+      });
+
     };
     const handleUserDisconnected = (user) => {
       setUsersList((usersList) =>
